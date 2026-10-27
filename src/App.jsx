@@ -5,16 +5,19 @@ const testCases = [
   {
     name: 'Addition Test',
     description: 'Verify that 2 + 3 equals 5',
+    file: 'calculator.test.js',
     run: () => add(2, 3) === 5,
   },
   {
     name: 'Valid Email Test',
     description: 'Accept student@example.com',
+    file: 'calculator.test.js',
     run: () => isValidEmail('student@example.com') === true,
   },
   {
     name: 'Invalid Email Test',
     description: 'Reject studentexample.com',
+    file: 'calculator.test.js',
     run: () => isValidEmail('studentexample.com') === false,
   },
 ];
@@ -353,83 +356,78 @@ function App() {
           ))}
 
           <p style={{ ...styles.muted, fontSize: 12, marginBottom: 0 }}>
-            These are pipeline stages,the actual run result are in your repository Actions tab.
+            These are pipeline stages; the actual run results are in your repository Actions tab.
           </p>
         </section>
         <section style={styles.panel}>
-  <p style={styles.eyebrow}>Automated Test Report</p>
-  <h2 style={styles.sectionTitle}>Test Cases</h2>
+          <p style={styles.eyebrow}>Automated Test Report</p>
+          <h2 style={styles.sectionTitle}>Test Cases</h2>
 
-  <p style={styles.muted}>
-    These test cases are executed by Vitest in the GitHub Actions workflow.
-    
-  </p>
+          <p style={styles.muted}>
+            Run these checks in the browser. The same cases are also executed by
+            Vitest in the GitHub Actions workflow.
+          </p>
 
-  {[
-    {
-      name: 'Addition Test',
-      description: 'Verify that 2 + 3 equals 5',
-      file: 'calculator.test.js',
-    },
-    {
-      name: 'Valid Email Test',
-      description: 'Accept student@example.com',
-      file: 'calculator.test.js',
-    },
-    {
-      name: 'Invalid Email Test',
-      description: 'Reject studentexample.com',
-      file: 'calculator.test.js',
-    },
-  ].map((test, index) => (
-    <div key={test.name} style={styles.testRow}>
-      <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
-        <div style={styles.stageNumber}>
-          {String(index + 1).padStart(2, '0')}
-        </div>
-        <div>
-          <div style={{ fontWeight: 700, fontSize: 14 }}>
-            {test.name}
+          <button type="button" style={styles.button} onClick={runTests}>
+            Run tests
+          </button>
+
+          {testCases.map((test, index) => {
+            const result = results[index];
+
+            return (
+              <div key={test.name} style={styles.testRow}>
+                <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
+                  <div style={styles.stageNumber}>
+                    {String(index + 1).padStart(2, '0')}
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: 14 }}>
+                      {test.name}
+                    </div>
+                    <div
+                      style={{
+                        color: colors.muted,
+                        fontSize: 12,
+                        marginTop: 6,
+                      }}
+                    >
+                      {test.description}
+                    </div>
+                    <div
+                      style={{
+                        color: colors.purple,
+                        fontSize: 11,
+                        marginTop: 5,
+                      }}
+                    >
+                      {test.file}
+                    </div>
+                  </div>
+                </div>
+
+                <span
+                  style={
+                    result
+                      ? badgeStyle(result.passed)
+                      : {
+                          ...styles.badge,
+                          background: '#202c43',
+                          color: '#cbd5e1',
+                        }
+                  }
+                >
+                  {result?.message ?? 'NOT RUN'}
+                </span>
+              </div>
+            );
+          })}
+
+          <div style={styles.note}>
+            Open GitHub repository → Actions → latest workflow run → automated
+            test step
           </div>
-          <div
-            style={{
-              color: colors.muted,
-              fontSize: 12,
-              marginTop: 6,
-            }}
-          >
-            {test.description}
-          </div>
-          <div
-            style={{
-              color: colors.purple,
-              fontSize: 11,
-              marginTop: 5,
-            }}
-          >
-            {test.file}
-          </div>
-        </div>
-      </div>
-
-      <span
-        style={{
-          ...styles.badge,
-          background: '#202c43',
-          color: '#cbd5e1',
-        }}
-      >
-        TEST CASE
-      </span>
-    </div>
-  ))}
-
-  <div style={styles.note}>
-    
-    Open GitHub repository → Actions → latest workflow run
-    →  automated test step
-  </div>
-</section>
+        </section>
 
      
 
