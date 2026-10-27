@@ -267,7 +267,7 @@ function App() {
         </header>
 
         <section style={styles.hero}>
-          <p style={styles.eyebrow}>DevOps CBP · Project Dashboard</p>
+          <p style={styles.eyebrow}> Project Dashboard</p>
           <h1 style={styles.title}>
             Automated Code Quality
             <br />
@@ -320,8 +320,7 @@ function App() {
           <h2 style={styles.sectionTitle}>The CI/CD pipeline</h2>
           <p style={styles.muted}>
             Each stage contributes to a repeatable quality and deployment
-            process. In your GitHub Actions workflow, later steps should run
-            only when required earlier steps succeed.
+            process.
           </p>
 
           {pipelineStages.map((stage) => (
@@ -354,130 +353,91 @@ function App() {
           ))}
 
           <p style={{ ...styles.muted, fontSize: 12, marginBottom: 0 }}>
-            These are pipeline stages, not live GitHub Actions statuses. Check
-            the Actions tab in your repository for the actual run result.
+            These are pipeline stages,the actual run result are in your repository Actions tab.
           </p>
         </section>
-
         <section style={styles.panel}>
-          <p style={styles.eyebrow}>Interactive Demonstration</p>
-          <h2 style={styles.sectionTitle}>Automated test runner</h2>
-          <p style={styles.muted}>
-            Run three sample checks in your browser. These demonstrate the
-            application logic; GitHub Actions separately runs the real Vitest
-            test suite.
-          </p>
+  <p style={styles.eyebrow}>Automated Test Report</p>
+  <h2 style={styles.sectionTitle}>Test Cases</h2>
 
-          <button onClick={runTests} style={styles.button}>
-            ▶ &nbsp; Run Demo Tests
-          </button>
+  <p style={styles.muted}>
+    These test cases are executed by Vitest in the GitHub Actions workflow.
+    
+  </p>
 
-          {hasRun && (
-            <div aria-live="polite" style={{ marginTop: 25 }}>
-              <div
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  gap: 12,
-                }}
-              >
-                <h3 style={{ margin: 0, fontSize: 17 }}>Execution results</h3>
-                <span style={badgeStyle(failedCount === 0)}>
-                  {failedCount === 0 ? 'ALL CHECKS PASSED' : 'FAILURE DETECTED'}
-                </span>
-              </div>
-
-              <div style={styles.grid}>
-                <div
-                  style={{
-                    ...styles.panel,
-                    padding: 16,
-                    background: '#102b23',
-                  }}
-                >
-                  <div style={{ color: colors.green, fontSize: 12 }}>
-                    PASSED
-                  </div>
-                  <p style={{ ...styles.statValue, color: colors.green }}>
-                    {passedCount}
-                  </p>
-                </div>
-                <div
-                  style={{
-                    ...styles.panel,
-                    padding: 16,
-                    background: '#321b27',
-                  }}
-                >
-                  <div style={{ color: colors.red, fontSize: 12 }}>FAILED</div>
-                  <p style={{ ...styles.statValue, color: colors.red }}>
-                    {failedCount}
-                  </p>
-                </div>
-              </div>
-
-              {results.map((test) => (
-                <div key={test.name} style={styles.testRow}>
-                  <div>
-                    <div style={{ fontWeight: 700, fontSize: 14 }}>
-                      {test.name}
-                    </div>
-                    <div
-                      style={{
-                        color: colors.muted,
-                        fontSize: 12,
-                        marginTop: 6,
-                      }}
-                    >
-                      {test.description}
-                    </div>
-                  </div>
-                  <span style={badgeStyle(test.passed)}>{test.message}</span>
-                </div>
-              ))}
-
-              <h3
-                style={{
-                  color: failedCount === 0 ? colors.green : colors.red,
-                  fontSize: 16,
-                  marginTop: 22,
-                }}
-              >
-                {failedCount === 0
-                  ? '✓ All browser demo tests passed!'
-                  : '✕ One or more browser demo tests failed.'}
-              </h3>
-              <button
-                onClick={() => {
-                  setResults([]);
-                  setHasRun(false);
-                }}
-                style={styles.secondaryButton}
-              >
-                Reset results
-              </button>
-            </div>
-          )}
-
-          <div style={styles.note}>
-            <strong>Evaluation tip — demonstrate CI failure safely:</strong>
-            <br />
-            Temporarily change the expected result from 5 to 6 in
-            <code> src/utils/calculator.test.js </code>
-            and push the change. GitHub Actions should fail at the Vitest step
-            and skip dependent build/deployment steps. Restore the expectation
-            to 5 afterward and push again. This browser demo is separate from
-            the CI test run.
+  {[
+    {
+      name: 'Addition Test',
+      description: 'Verify that 2 + 3 equals 5',
+      file: 'calculator.test.js',
+    },
+    {
+      name: 'Valid Email Test',
+      description: 'Accept student@example.com',
+      file: 'calculator.test.js',
+    },
+    {
+      name: 'Invalid Email Test',
+      description: 'Reject studentexample.com',
+      file: 'calculator.test.js',
+    },
+  ].map((test, index) => (
+    <div key={test.name} style={styles.testRow}>
+      <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
+        <div style={styles.stageNumber}>
+          {String(index + 1).padStart(2, '0')}
+        </div>
+        <div>
+          <div style={{ fontWeight: 700, fontSize: 14 }}>
+            {test.name}
           </div>
-        </section>
+          <div
+            style={{
+              color: colors.muted,
+              fontSize: 12,
+              marginTop: 6,
+            }}
+          >
+            {test.description}
+          </div>
+          <div
+            style={{
+              color: colors.purple,
+              fontSize: 11,
+              marginTop: 5,
+            }}
+          >
+            {test.file}
+          </div>
+        </div>
+      </div>
+
+      <span
+        style={{
+          ...styles.badge,
+          background: '#202c43',
+          color: '#cbd5e1',
+        }}
+      >
+        TEST CASE
+      </span>
+    </div>
+  ))}
+
+  <div style={styles.note}>
+    
+    Open GitHub repository → Actions → latest workflow run
+    →  automated test step
+  </div>
+</section>
+
+     
 
         <footer style={styles.footer}>
           <div style={{ fontWeight: 700, color: '#cbd5e1' }}>
             Automated Code Quality and Deployment Using GitHub Actions
           </div>
-          <div>DevOps CBP Project · React · ESLint · Vitest · Vite · GitHub Pages</div>
+          <div> React · ESLint · Vitest · Vite · GitHub Pages</div>
         </footer>
       </div>
     </main>
