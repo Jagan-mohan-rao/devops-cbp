@@ -57,19 +57,17 @@ function App() {
       <header style={styles.header}>
         <div style={styles.logo}>CI/CD</div>
         <div>
-          <h1 style={styles.title}>DevOps Quality Dashboard</h1>
+          <h1 style={styles.title}> DevOps Quality Dashboard</h1>
           <p style={styles.subtitle}>
-            Automated Code Quality and Deployment Using GitHub Actions
+              Automated Code Quality and Deployment Using GitHub Actions
           </p>
         </div>
       </header>
 
       <section style={styles.card}>
-        <h2>Frontend Test Runner</h2>
+        <h2> Test Runner</h2>
         <p style={styles.description}>
-          Execute three sample checks directly in your browser.
-          The same application functions are also tested using Vitest
-          in your GitHub Actions pipeline.
+          
         </p>
 
         <button onClick={runTests} style={styles.button}>
