@@ -113,31 +113,7 @@ function App() {
         )}
       </section>
 
-      <section style={styles.card}>
-        <h2>CI/CD Pipeline</h2>
-
-        {[
-          ['01', 'Source Code', 'GitHub repository'],
-          ['02', 'Code Quality', 'ESLint'],
-          ['03', 'Automated Tests', 'Vitest'],
-          ['04', 'Production Build', 'Vite'],
-          ['05', 'Deployment', 'GitHub Pages'],
-        ].map(([number, title, tool]) => (
-          <div key={number} style={styles.pipelineRow}>
-            <span style={styles.number}>{number}</span>
-            <div>
-              <strong>{title}</strong>
-              <p style={styles.description}>{tool}</p>
-            </div>
-          </div>
-        ))}
-
-        <p style={styles.note}>
-          The pipeline status must be verified in GitHub Actions.
-          These labels describe the workflow; they do not report
-          live GitHub status.
-        </p>
-      </section>
+   
 
       <footer style={styles.footer}>
         DevOps CBP Project · React · Vitest · GitHub Actions
